@@ -14,3 +14,9 @@ The aim is to analyze and study the Regions and Countries which faced and experi
 # Content
 
 The dataset includes a record of the date, time, location, depth, magnitude, and source of every earthquake with a reported magnitude 5.5 or higher since 1965 to 2016.
+
+
+
+### Time Series Analysis of Years and Count of Earthquakes in that Year
+ 
+![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Time%20Series-Year%20vs%20Count%20of%20Earthquakes.png)
