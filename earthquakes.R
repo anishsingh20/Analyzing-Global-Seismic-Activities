@@ -1,6 +1,7 @@
 #Seismic Data Analysis
 
-#loading the dataset
+
+#loading the required Packages
 require(dplyr)
 require(ggplot2)
 library(maps)
@@ -8,6 +9,7 @@ library(fpp)
 library(astsa)
 library(lubridate)
 
+#loading the dataset
 earthq<-read.csv('database.csv')
 earthq
 
@@ -30,12 +32,18 @@ ggplot(aes(x = Magnitude ),data = earthq) +
 
 #istribution of Magintudes for Earthquakes
 ggplot(data=filter(earthq,Type=="Earthquake"),aes(Magnitude))+
-  geom_area(aes(y = ..count..,fill="blue"), stat = "bin")+
+  geom_area(aes(y = ..count..),fill="purple", stat = "bin",alpha=0.7)+
   labs(title="Earthquakes",caption="Anish") + 
   guides(fill=FALSE)
  
 by(earthq$Magnitude,earthq$Type,summary)
 #Highest Median Magnitude of Rock Burst
+
+ggplot(aes(x = Type, y = Magnitude),data = earthq) + 
+  geom_boxplot() + 
+  coord_trans(y = "log10") + 
+  labs(title="Boxplot of Type vs Magnitude",x = "Type of Seisic Activity", y = "Magnitude")
+
 
 #most types of seismic activities were Earthquakes then Explosions 
 table(earthq$Type)
@@ -70,7 +78,8 @@ ggplot(aes(x = Year , y = Mean_Magnitude),data = yeardf) +
   geom_line(color="blue")  + geom_point(color="blue") + 
   scale_x_continuous(limits = c(1965,2016),breaks = seq(1965,2016,10))  + 
   labs(title="Time Series Plot of Year vs Mean of Magnitudes for that Year",
-       x = "Year " , y ="Mean Magnitudes")
+       x = "Year " , y ="Mean Magnitudes")+ 
+  scale_y_continuous(breaks=seq(5.4,7,0.05))
 #Mean Magnitues of Earthquakes higher for years 1965 to 1970 after then dropped
   
 
@@ -94,7 +103,7 @@ ggplot(aes(Magnitude),data = earthq) +
 
 map <- ggplot(earthq) + borders("world", colour="#8C7450", fill="#F0CE23")  
 
-print(map + geom_point(aes(x=earthq$Longitude, y=earthq$Latitude,color=Magnitude,size=Magnitude),shape=18) +
+print(map + geom_point(alpha=0.7,aes(x=earthq$Longitude, y=earthq$Latitude,color=Magnitude,size=Magnitude),shape=18) +
           scale_color_gradient(low="#715EEA", high="#FE012B") +
           theme(legend.position = "top")+
           ggtitle("World Map of Earthquakes by Magnitude")+labs(caption="--Made by Anish",x = "Longitude",
