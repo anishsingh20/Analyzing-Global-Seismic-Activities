@@ -1,6 +1,12 @@
 #Seismic Data Analysis
 
 #loading the dataset
+require(dplyr)
+require(ggplot2)
+library(maps)
+library(fpp)
+library(astsa)
+library(lubridate)
 
 earthq<-read.csv('database.csv')
 earthq
@@ -15,8 +21,7 @@ earthq<-earthq[,!apply(is.na(earthq), 2, any)]
 earthq$Year <- format(as.Date(earthq$Date, format="%d/%m/%Y"),"%Y")
 
 
-require(dplyr)
-require(ggplot2)
+
 
 #Distribution of Magnitude of Earthquakes
 ggplot(aes(x = Magnitude ),data = earthq) + 
@@ -53,7 +58,7 @@ ggplot(yeardf , aes(Year , Count)) +
     geom_point(color="purple") + 
     scale_x_continuous(limits = c(1965,2016),breaks= seq(1965,2016,10))  + 
   labs(title="Time Series Plot of Year vs Number of Earthquakes",
-       x = "Year " , y ="Count")
+       x = "Year " , y ="Number of Earthquakes")
   
 #Highest number of Earthquakes in Year 2011  
   
@@ -82,5 +87,15 @@ ggplot(aes(Magnitude.Type),data = earthq) +
 #Density Plot of Magnitude colored by its type- Smoothed version of Histograms
 ggplot(aes(Magnitude),data = earthq) + 
   geom_density(aes(fill=Magnitude.Type,color=Magnitude.Type,alpha=0.001)) + 
-  labs(title="Density Plot of Magnitude ")
+  labs(title="Density Plot of Magnitude",y="Density")
 
+
+#World Map of Earthquakes 
+
+map <- ggplot(earthq) + borders("world", colour="#8C7450", fill="#F0CE23")  
+
+print(map + geom_point(aes(x=earthq$Longitude, y=earthq$Latitude,color=Magnitude,size=Magnitude),shape=18) +
+          scale_color_gradient(low="#715EEA", high="#FE012B") +
+          theme(legend.position = "top")+
+          ggtitle("World Map of Earthquakes by Magnitude")+labs(caption="--Made by Anish",x = "Longitude",
+                                                   y="Latitude"))
