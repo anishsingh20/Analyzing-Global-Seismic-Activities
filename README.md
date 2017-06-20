@@ -2,10 +2,14 @@
 Significant Earthquakes from 1965-2016 and Date, time, and location of all earthquakes with magnitude of 5.5 or higher.
 
 
+
 ### World Map of all Seismic Activities colored by Magnitude 
 
 
+
 ![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Seismic%20Activities(World%20Map).png)
+
+
 
 
 
@@ -31,3 +35,15 @@ The dataset includes a record of the date, time, location, depth, magnitude, and
 
 
 The above plot shows that seismic activity has been very __fluctuating__, specially during the last 5 years. In *__2011__* we had a peak (with more than 350 earthquakes, the highest record on the last 50 years!) followed by a sudden fall on the next year.
+
+
+
+
+### Time Series Analysis of Years vs the Mean Of Magnitudes of the Earthquakes for each Year 
+
+
+![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Time%20Series-Year%20vs%20Mean%20Magnitudes.png)
+
+
+The Plot shows that the Highest Magnitude of the Earthquakes were Recorded between years *__1965 to 1970__* and started Dropping after that and then kept fluctuating.
+__
