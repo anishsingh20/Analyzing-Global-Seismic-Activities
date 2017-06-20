@@ -98,4 +98,4 @@ print(map + geom_point(aes(x=earthq$Longitude, y=earthq$Latitude,color=Magnitude
           scale_color_gradient(low="#715EEA", high="#FE012B") +
           theme(legend.position = "top")+
           ggtitle("World Map of Earthquakes by Magnitude")+labs(caption="--Made by Anish",x = "Longitude",
-                                                   y="Latitude"))
+          y="Latitude"))
