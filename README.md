@@ -1,6 +1,14 @@
 # Analyzing-Global-Seismic-Activities
 Significant Earthquakes from 1965-2016 and Date, time, and location of all earthquakes with magnitude of 5.5 or higher.
 
+
+### World Map of all Seismic Activities colored by Magnitude 
+
+
+![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Seismic%20Activities(World%20Map).png)
+
+
+
 # Aim of the Analysis
 
 The aim is to analyze and study the Regions and Countries which faced and experienced most seismic activities and Earthquakes with the help of various __Visualizations and statistical techniques__ which will explain lots of hidden trends and finding out the reason behind those seismic activities.
