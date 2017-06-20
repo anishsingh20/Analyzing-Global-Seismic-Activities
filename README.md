@@ -39,6 +39,7 @@ The above plot shows that seismic activity has been very __fluctuating__, specia
 
 
 
+
 ### Time Series Analysis of Years vs the Mean Of Magnitudes of the Earthquakes for each Year 
 
 
