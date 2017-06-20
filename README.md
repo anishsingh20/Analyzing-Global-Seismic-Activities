@@ -19,7 +19,7 @@ The dataset includes a record of the date, time, location, depth, magnitude, and
 
 ### Time Series Analysis of Years and Count of Earthquakes in that Year
  
-![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Time%20Series-Year%20vs%20Count%20of%20Earthquakes.png)
+![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Time%20Series-Year%20vs%20Number%20of%20Earthquakes.png)
 
 
 The above plot shows that seismic activity has been very __fluctuating__, specially during the last 5 years. In *__2011__* we had a peak (with more than 350 earthquakes, the highest record on the last 50 years!) followed by a sudden fall on the next year.
