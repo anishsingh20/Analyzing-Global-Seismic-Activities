@@ -18,7 +18,7 @@ Significant Earthquakes from 1965-2016 and Date, time, and location of all earth
 ![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/High%20Magnitude%20Earthquakes%20Sites.png)
 
 
-
+![github logo]()
 
 
 # Aim of the Analysis
