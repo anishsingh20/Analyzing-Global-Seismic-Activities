@@ -173,15 +173,14 @@ plot2<-map2 + geom_point(aes(x=Longitude,y=Latitude,color=Magnitude,size=Magnitu
                                                               y="Latitude") + theme_dark()
 
 #Creating a GIF of all earthquakes having Magnitude>=7 on richter scale
+require(gganimate)
 gganimate(plot2)
 #Regions Having lots of High Magnitude Earthquakes are Africa and Japan and some portions
 #of Asia below India
 
 
 #Saving to GIF file - required to install ImageMagic software
-im.convert(files, output = "animation.gif", convert = c("convert", "gm convert"),
-           cmd.fun = if (.Platform$OS.type == "windows") shell else system, extra.opts = "",
-           clean = FALSE)
+
 
 
 
@@ -230,7 +229,7 @@ plot <- map + geom_point(data = Newdf, aes(x = Longitude, y = Latitude,
                       size = 2.5,color="#336600")+
   geom_jitter(width = 0.1) +labs(title = "Earthquake above 6.5 point on richter scale")+theme_void()
 
-
+#another Animation of Earthquakes Sites which have Magnitude above 6.5
 gganimate(plot)
 
 
