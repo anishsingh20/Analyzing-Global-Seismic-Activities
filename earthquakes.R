@@ -162,9 +162,18 @@ ggplot(aes(Year , Median_Magnitude),data  = Highdf) +
 #was recorded for year 1986
 
 
+#Plotting of High Magnitude Earthquake Sites on the World Map
 
+map2 <- ggplot(HighMagnitude) + borders("world", colour="black", fill="#1ab2ff")  
 
+print(map2 + geom_point(aes(x=Longitude,y=Latitude,color=Magnitude,size=Magnitude),shape=18) +
+        scale_color_gradient(low="#00ff00", high="#FE012B") +
+        theme(legend.position = "top")+
+        ggtitle("Earthquakes Sites With Magnitude >= 7 ")+labs(caption="--Made by Anish",x = "Longitude",
+                                                              y="Latitude"))
 
+#Regions Having lots of High Magnitude Earthquakes are Africa and Japan and some portions
+#of Asia below India
 
 
 
