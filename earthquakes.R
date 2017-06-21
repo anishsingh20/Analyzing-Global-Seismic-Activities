@@ -164,18 +164,24 @@ ggplot(aes(Year , Median_Magnitude),data  = Highdf) +
 
 #Plotting of High Magnitude Earthquake Sites on the World Map
 
-map2 <- ggplot(HighMagnitude) + borders("world", colour="black", fill="#1ab2ff")  
+map2 <- ggplot(HighMagnitude) + borders("world", colour="black", fill="#0000ff")  
 
-print(map2 + geom_point(aes(x=Longitude,y=Latitude,color=Magnitude,size=Magnitude),shape=18) +
+plot2<-map2 + geom_point(aes(x=Longitude,y=Latitude,color=Magnitude,size=Magnitude,frame=Year,cumulative = TRUE),shape=18) +
         scale_color_gradient(low="#00ff00", high="#FE012B") +
         theme(legend.position = "top")+
-        ggtitle("Earthquakes Sites With Magnitude >= 7 ")+labs(caption="--Made by Anish",x = "Longitude",
-                                                              y="Latitude"))
+        ggtitle("Earthquakes Sites With Magnitude greater than 7 on richter Scale ")+labs(caption="--Made by Anish",x = "Longitude",
+                                                              y="Latitude") + theme_dark()
 
+#Creating a GIF of all earthquakes having Magnitude>=7 on richter scale
+gganimate(plot2)
 #Regions Having lots of High Magnitude Earthquakes are Africa and Japan and some portions
 #of Asia below India
 
 
+#Saving to GIF file - required to install ImageMagic software
+im.convert(files, output = "animation.gif", convert = c("convert", "gm convert"),
+           cmd.fun = if (.Platform$OS.type == "windows") shell else system, extra.opts = "",
+           clean = FALSE)
 
 
 
@@ -218,5 +224,13 @@ map<-ggplot()+geom_map(data=world,map=world,aes(x=long,y=lat,map_id=region),
 
 
 #Plotting points on world Map
+plot <- map + geom_point(data = Newdf, aes(x = Longitude, y = Latitude, 
+                                     frame = Year, 
+                                     cumulative = TRUE,size=Newdf$Magnitude), alpha = 0.3, 
+                      size = 2.5,color="#336600")+
+  geom_jitter(width = 0.1) +labs(title = "Earthquake above 6.5 point on richter scale")+theme_void()
+
+
+gganimate(plot)
 
 
