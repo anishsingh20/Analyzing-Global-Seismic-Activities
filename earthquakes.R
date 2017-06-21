@@ -108,3 +108,64 @@ print(map + geom_point(alpha=0.7,aes(x=earthq$Longitude, y=earthq$Latitude,color
           theme(legend.position = "top")+
           ggtitle("World Map of Earthquakes by Magnitude")+labs(caption="--Made by Anish",x = "Longitude",
           y="Latitude"))
+
+
+
+#Analysing All Seismic Activities having Magnitude >= 7 
+
+
+#making a world map of only Seismic activities above Magnitude 7
+HighMagnitude<-earthq %>%
+                filter(Magnitude >=7,complete.cases(Year)==T,Type=="Earthquake")
+
+#Histogram of High Magnitude Seismic Activities colored by Type
+ggplot(aes(Magnitude),data = HighMagnitude) + 
+  geom_histogram(color="black",
+    alpha=0.7,aes(fill=Magnitude.Type),bins=30) + 
+  labs(title="Histogram of High Magnitudes Earthquakes and its Types")
+
+#Density Plot
+ggplot(aes(Magnitude),data = HighMagnitude) + 
+  geom_density(aes(color=Magnitude.Type,fill = Magnitude.Type ,alpha=0.7)) +
+  labs(title="Density Plot of High Magnitude Earthquakes colored by Type")
+                            
+#High Magnitude Siesmic Activities are all of type Earthquake
+table(HighMagnitude$Type)
+
+#Choosing Median becuase it is not skewed and remains unaffected by Noise
+Highdf<- HighMagnitude %>% 
+        group_by(Year) %>%
+        summarise(Count  = n() , Median_Magnitude=median(Magnitude))
+
+#Converting Year Variable to numeric value
+Highdf$Year<-as.numeric(Highdf$Year)
+
+#Time Series of Year vs Count
+
+ggplot(aes(Year , Count),data  = Highdf) +
+  geom_line(color="#660066") +
+   geom_point(color="#660066",shape=19,size=3) + 
+    labs(title="Time Series of number of High Magnitude Earthquakes",
+         x="Year",y ="Number of Earthquakes") + 
+      scale_x_continuous(breaks=seq(1965,2016,5))
+    
+
+#Time series of Median Magnitude
+
+ggplot(aes(Year , Median_Magnitude),data  = Highdf) +
+  geom_line(color="#ff0066") +
+  geom_point(color="#ff0066",shape=19,size=3) + 
+  labs(title="Time Series of number of High Median Magnitudes of Earthquakes ",
+       x="Year",y ="Median Magnitudes") + 
+  scale_x_continuous(breaks=seq(1965,2016,5))
+#There are lots of fluctuations in the plot over time but highest Median Magnitude
+#was recorded for year 1986
+
+
+
+
+
+
+
+
+
