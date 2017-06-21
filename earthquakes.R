@@ -10,7 +10,7 @@ library(astsa)
 library(lubridate)
 
 #loading the dataset
-earthq<-read.csv('database.csv')
+earthq<-read.csv('database.csv',stringsAsFactors = FALSE)
 earthq
 
 #Summary Statistics
@@ -174,6 +174,34 @@ print(map2 + geom_point(aes(x=Longitude,y=Latitude,color=Magnitude,size=Magnitud
 
 #Regions Having lots of High Magnitude Earthquakes are Africa and Japan and some portions
 #of Asia below India
+
+
+
+
+
+
+#Creating Animated Plots
+#Convert the dates into character in order to split the coloumn into "dd" "mm" "yy"" columns
+
+#considering Earthquakes above Magnitude 6.5
+Newdf<-earthq %>%
+  filter(Magnitude >=6.5)
+
+
+Newdf$Date<-as.character(Newdf$Date)
+
+
+
+## Splitting the date into 3 new columns   
+Newdf$Year <- format(as.Date(Newdf$Date, format="%d/%m/%Y"),"%Y")
+Newdf$Month <- format(as.Date(Newdf$Date, format="%d/%m/%Y"),"%m")
+Newdf$Day <- format(as.Date(Newdf$Date, format="%d/%m/%Y"),"%d")
+
+
+#Change the Year column to numeric
+Newdf$Year=as.numeric(Newdf$Year)
+
+
 
 
 
