@@ -3,6 +3,16 @@ Significant Earthquakes from 1965-2016 and Date, time, and location of all earth
 
 
 
+### An animation of all the Earthquakes with Magnitude 7 or above happened between 1965-2016.
+
+
+![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/Earthquakes%20above%207.gif)
+
+The Earthquake with Highest Magnitude occured in 2011 as we can see in the Animation.
+
+
+
+
 ### World Map of all Seismic Activities colored by Magnitude 
 
 
@@ -18,7 +28,7 @@ Significant Earthquakes from 1965-2016 and Date, time, and location of all earth
 ![github logo](https://github.com/anishsingh20/Analyzing-Global-Seismic-Activities/blob/master/Plots/High%20Magnitude%20Earthquakes%20Sites.png)
 
 
-![github logo]()
+)
 
 
 # Aim of the Analysis
