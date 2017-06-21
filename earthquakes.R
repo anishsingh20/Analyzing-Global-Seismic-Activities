@@ -202,7 +202,21 @@ Newdf$Day <- format(as.Date(Newdf$Date, format="%d/%m/%Y"),"%d")
 Newdf$Year=as.numeric(Newdf$Year)
 
 
+#Getting the world map for plot and load the necessary package
 
 
+library(ggmap)
+
+#Loading the World map as a data frame to use in ggplot
+world<-map_data("world")
+
+#Removing Antarctica region from the world map
+world <- world[world$region != "Antarctica",]
+
+map<-ggplot()+geom_map(data=world,map=world,aes(x=long,y=lat,map_id=region),
+                       color='#333300',fill='#663300')
+
+
+#Plotting points on world Map
 
 
