@@ -115,6 +115,12 @@ earth.trainY<-earth_new[rand==1,7]
 earth.test<-earth_new[rand==2,1:6]
 earth.testY<-earth_new[rand==2,7]
 
+#Converting the Labels to numeric values
+earth.testY<-as.numeric(earth.testY)
+earth.trainY<-as.numeric(earth.trainY)
+
+
+
 #Converting Labels to One Hot Encoding
 earth.trainY<-to_categorical(earth.trainY)
 earth.testY <-to_categorical(earth.testY)
