@@ -103,6 +103,7 @@ save_model_hdf5(model,"MLP1.h5")
 
 #converting Date and Time to Numeric Type 
 #factors are just a data type in R which are simply categorical values
+
 earth_new$Time<-as.factor(earth_new$Time)
 earth_new$Time<-as.numeric(earth_new$Time)
 earth_new$Date<-as.factor(earth_new$Date)
@@ -157,6 +158,20 @@ history<-model%>%fit(earth.train,earth.trainY,epochs=200,batch_size=10,
 
 #Visualizing the Model's Metrics and Architecture
 tensorboard()
+
+
+#Plotting Metrics
+
+plot(history$metrics$,col="blue",type="l",xlab="Epochs",ylab="Accuracy",main="Epochs vs Accuracy")
+lines(history$metrics$val_acc,col="red",type="l")
+
+
+plot(history$metrics$loss,col="red",type="l",xlab="epochs",ylab="Loss",main="Epochs vs Loss") 
+lines(history$metrics$val_loss,col="blue",type="l")
+
+
+
+#Evaluating the Model on Test Data
 
 
 
