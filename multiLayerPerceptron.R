@@ -72,3 +72,13 @@ model %>% compile(loss="mean_squared_error",optimizer="adam",metrics="accuracy")
 #Loss function is mean squared error bacause of Regression Problem as we want to predict
 #numeric values
 
+
+#Fitting the Model ---------------------
+
+history<- model %>% fit(earth.train,earth.trainY,epochs=50,batch_size=10,
+                        validation_split=0.2,verbose=1,
+                        callbacks= callback_tensorboard(log_dir = "logs/run_a",write_graph=T,
+                        histogram_freq=1))
+
+
+
