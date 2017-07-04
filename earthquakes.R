@@ -16,7 +16,7 @@ earthq
 #Summary Statistics
 summary(earthq)
 
-#removing the NA columns-suing apply function
+#removing the NA columns-uing apply function
 earthq<-earthq[,!apply(is.na(earthq), 2, any)]
 
 #making a new column Year with Year values
