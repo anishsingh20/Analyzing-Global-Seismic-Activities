@@ -101,12 +101,6 @@ save_model_hdf5(model,"MLP1.h5")
 
 #Saperating Training and Test Data
 
-#Converting Type to One Hot encoding data
-earth_new$Type<-as.factor(earth_new$Type)
-#to_categorical converts it to  OHE- one hot encoding
-earth_new$Type <- to_categorical(earth_new$Type)
-
-
 #converting Date and Time to Numeric Type 
 #factors are just a data type in R which are simply categorical values
 earth_new$Time<-as.factor(earth_new$Time)
@@ -114,6 +108,18 @@ earth_new$Time<-as.numeric(earth_new$Time)
 earth_new$Date<-as.factor(earth_new$Date)
 earth_new$Date<-as.numeric(earth_new$Date)
 
+earth.train<-earth_new[rand==1,1:6]
+earth.trainY<-earth_new[rand==1,7]
+
+#Test Data
+earth.test<-earth_new[rand==2,1:6]
+earth.testY<-earth_new[rand==2,7]
+
+#Converting Labels to One Hot Encoding
+earth.trainY<-to_categorical(earth.trainY)
+earth.testY <-to_categorical(earth.testY)
+
+#Defining the MLP Model
 
 model<-keras_model_sequential()
 
@@ -122,7 +128,7 @@ model<-keras_model_sequential()
 model %>% layer_dense(units = 32 , activation = "relu" , input_shape=c(6)) %>%
           layer_dense(units=10 ,activation="relu") %>%
           #Output Layer
-          layer_dense(units= 1)
+          layer_dense(units= )
 
 
 summary(model)
