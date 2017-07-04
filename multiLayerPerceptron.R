@@ -24,12 +24,13 @@ earth_new$Date<-as.numeric(earth_new$Date)
 #Converting data frame to a Matrix
 earth_new<-as.matrix(earth_new)
 
-#Getting the Domentions of the Matrix
+#Getting the Dimentions of the Matrix
 cat("The Dimentions of the matrix is", dim(earth_new))
 
 
-#Normalizing the Data
-earth_new$Latitude<-normalize(earth_new$Latitude)
+#Normalizing the Data i.e the inputs
+earth_new[,1:6]<-normalize(earth_new[,1:6])
+summary(earth_new)
 
 
 #Saperating Test and Training Data
