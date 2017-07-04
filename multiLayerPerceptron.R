@@ -108,12 +108,15 @@ earth_new$Time<-as.numeric(earth_new$Time)
 earth_new$Date<-as.factor(earth_new$Date)
 earth_new$Date<-as.numeric(earth_new$Date)
 
-earth.train<-earth_new[rand==1,1:6]
-earth.trainY<-earth_new[rand==1,7]
+#Converting Training and Test data to Matrix
+earth.train<-as.matrix(earth_new[rand==1,1:6])
+earth.trainY<-as.numeric(as.factor(earth_new[rand==1,7]))
 
 #Test Data
-earth.test<-earth_new[rand==2,1:6]
-earth.testY<-earth_new[rand==2,7]
+earth.test<-as.matrix(earth_new[rand==2,1:6])
+earth.testY<-as.numeric(as.factor(earth_new[rand==2,7]))
+
+
 
 #Converting the Labels to numeric values
 earth.testY<-as.numeric(earth.testY)
@@ -132,27 +135,28 @@ model<-keras_model_sequential()
 
 #making a deeper Model with more layers
 model %>% layer_dense(units = 32 , activation = "relu" , input_shape=c(6)) %>%
-          layer_dense(units=10 ,activation="relu") %>%
           #Output Layer
-          layer_dense(units= )
+          layer_dense(units=4,activation = "softmax" )
 
 
 summary(model)
 
 #Compiling the Model
 
-model %>% compile(loss = "mse",optimizer="adam",
-                   metrics='accuracy')
+model %>% compile(loss = 'categorical_crossentropy'
+                  , optimizer="adam",
+                    metrics='accuracy')
 
 
 
-history<-model%>%fit(earth.train,earth.trainY,epochs=300,batch_size=5,
+history<-model%>%fit(earth.train,earth.trainY,epochs=200,batch_size=10,
                          validation_split=0.2,verbose=1,
                          callbacks= 
-                         callback_tensorboard(log_dir = "logs/run_a",write_graph=T)
+                         callback_tensorboard(log_dir = "logs/run_b",write_graph=T)
                                                          )
 
-
+#Visualizing the Model's Metrics and Architecture
+tensorboard()
 
 
 
