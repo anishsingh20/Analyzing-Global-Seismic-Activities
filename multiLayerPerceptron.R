@@ -7,12 +7,8 @@ str(earthq)
 
 
 #Generating new Dataframes with only appropiate Variables
-earth_new<-earthq %>% select(Date,Time,Latitude,Longitude,Type,Depth,Magnitude)
+earth_new<-earthq %>% select(Date,Time,Latitude,Longitude,Depth,Magnitude,Type)
 
-#Converting Type to Numeric data
-earth_new$Type<-as.factor(earth_new$Type)
-#to_categorical converts it to  OHE- one hot encoding
-earth_new$Type <- as.numeric(earth_new$Type)
 
 #converting Date and Time to Numeric Type 
 #factors are just a data type in R which are simply categorical values
@@ -96,32 +92,53 @@ save_model_hdf5(model,"MLP1.h5")
 
 
 
+#--------------------------------------------------------------------------------
+
 
 #Another Deeper Model----------------
 
+#Trying to do classification to Predict the type of Siesmic Activity
 
-model1<-keras_model_sequential()
+#Saperating Training and Test Data
+
+#Converting Type to One Hot encoding data
+earth_new$Type<-as.factor(earth_new$Type)
+#to_categorical converts it to  OHE- one hot encoding
+earth_new$Type <- to_categorical(earth_new$Type)
+
+
+#converting Date and Time to Numeric Type 
+#factors are just a data type in R which are simply categorical values
+earth_new$Time<-as.factor(earth_new$Time)
+earth_new$Time<-as.numeric(earth_new$Time)
+earth_new$Date<-as.factor(earth_new$Date)
+earth_new$Date<-as.numeric(earth_new$Date)
+
+
+model<-keras_model_sequential()
 
 
 #making a deeper Model with more layers
-model1 %>% layer_dense(units = 32 , activation = "relu" , input_shape=c(6)) %>%
-  #Output Layer
-  layer_dense(units= 1)
+model %>% layer_dense(units = 32 , activation = "relu" , input_shape=c(6)) %>%
+          layer_dense(units=10 ,activation="relu") %>%
+          #Output Layer
+          layer_dense(units= 1)
 
 
-summary(model1)
+summary(model)
 
 #Compiling the Model
 
-model1 %>% compile(loss = "mean_squared_error",optimizer="adam",
+model %>% compile(loss = "mse",optimizer="adam",
                    metrics='accuracy')
 
 
 
-history2<-model1 %>% fit(earth.train,earth.trainY,epochs=200,batch_size=5,
+history<-model%>%fit(earth.train,earth.trainY,epochs=300,batch_size=5,
                          validation_split=0.2,verbose=1,
-                         callbacks= callback_tensorboard(log_dir = "logs/run_c",write_graph=T,
-                                                         histogram_freq=1))
+                         callbacks= 
+                         callback_tensorboard(log_dir = "logs/run_a",write_graph=T)
+                                                         )
 
 
 
