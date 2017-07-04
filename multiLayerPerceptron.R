@@ -38,4 +38,18 @@ summary(earth_new)
 rand<-sample(2,nrow(earth_new),replace = T,prob=c(0.67,0.33))
 
 #Splitting the data
-earth.train<-earthq[rand==1,1:6]
+
+#Setting the seed for reproducable results
+set.seed(1212)
+
+#Training Data
+earth.train<-earth_new[rand==1,1:6]
+earth.trainY<-earth_new[rand==1,7]
+
+
+#Test Data
+earth.test<-earth_new[rand==2,1:6]
+earth.testY<-earth_new[rand==2,7]
+
+
+
