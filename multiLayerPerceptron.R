@@ -7,7 +7,7 @@ str(earthq)
 
 
 #Generating new Dataframes with only appropiate Variables
-earth_new<-earthq %>% select(Date,Time,Latitude,Longitude,Depth,Magnitude,Type)
+earth_new<-earthq %>% select(Date,Time,Type,Latitude,Longitude,Depth,Magnitude)
 
 
 #converting Date and Time to Numeric Type 
@@ -23,6 +23,7 @@ earth_new<-as.matrix(earth_new)
 #Getting the Dimentions of the Matrix
 cat("The Dimentions of the matrix is", dim(earth_new))
 
+earth_new$Type<-as.numeric(as.factor(earth_new$Type))
 
 #Normalizing the Data i.e the inputs
 earth_new[,1:6]<-normalize(earth_new[,1:6])
@@ -39,42 +40,51 @@ rand<-sample(2,nrow(earth_new),replace = T,prob=c(0.67,0.33))
 set.seed(1212)
 
 #Training Data
-earth.train<-earth_new[rand==1,1:6]
-earth.trainY<-earth_new[rand==1,7]
+earth.train<-as.matrix(earth_new[rand==1,1:6])
+earth.trainY<-as.matrix(earth_new[rand==1,7])
 
 
 #Test Data
-earth.test<-earth_new[rand==2,1:6]
-earth.testY<-earth_new[rand==2,7]
+earth.test<-as.matrix(earth_new[rand==2,1:6])
+earth.testY<-as.matrix(earth_new[rand==2,7])
 
 
 #Model Defination
 
-model<-keras_model_sequential()
+model1<-keras_model_sequential()
 
 
 #Defining the Architecture of the MLP Model
 
-model %>% layer_dense(units=12,activation="relu",input_shape=c(6)) %>%
+model1 %>% layer_dense(units=5,activation="relu",input_shape=c(6)) %>%
   layer_dense(units=1) 
 #No activation for output layer because we only want the numeric values
+summary(model1)
+get_config(model1)
+get_layer(model1,index = 1)
 
-get_config(model)
-get_layer(model,index = 1)
 
-
+optrms<-optimizer_rmsprop(lr=0.01) 
 #compiling the Model
-model %>% compile(loss="mean_squared_error",optimizer="adam",metrics="accuracy")
+model1 %>% compile(loss="mean_squared_error",optimizer=optrms,metrics="accuracy")
 #Loss function is mean squared error bacause of Regression Problem as we want to predict
 #numeric values
 
 
 #Fitting the Model ---------------------
 
-history<- model %>% fit(earth.train,earth.trainY,epochs=50,batch_size=10,
-                        validation_split=0.2,verbose=1,
+history<- model1 %>% fit(earth.train,earth.trainY,epochs=50,batch_size=128,
+                        validation_split=0.2,verbose=2,
                         callbacks= callback_tensorboard(log_dir = "logs/run_a",write_graph=T,
                         histogram_freq=1))
+
+
+
+
+#evaluating the Model
+
+score<-model1 %>% evaluate(earth.test,earth.testY,batch_size=120)
+score
 
 
 #Fine tuning the MLP Model for producing better Results and accuracy
@@ -135,7 +145,7 @@ model<-keras_model_sequential()
 
 
 #making a deeper Model with more layers
-model %>% layer_dense(units = 32 , activation = "relu" , input_shape=c(6)) %>%
+model %>% layer_dense(units = 8 , activation = "relu" , input_shape=c(6)) %>%
           #Output Layer
           layer_dense(units=4,activation = "softmax" )
 
@@ -144,16 +154,18 @@ summary(model)
 
 #Compiling the Model
 
+opt<-optimizer_rmsprop(lr=0.01)
+  
 model %>% compile(loss = 'categorical_crossentropy'
-                  , optimizer="adam",
+                  , optimizer=opt,
                     metrics='accuracy')
 
 
 
-history<-model%>%fit(earth.train,earth.trainY,epochs=200,batch_size=10,
+history<-model%>%fit(earth.train,earth.trainY,epochs=20,batch_size=10,
                          validation_split=0.2,verbose=1,
                          callbacks= 
-                         callback_tensorboard(log_dir = "logs/run_b",write_graph=T)
+                         callback_tensorboard(log_dir = "logs/run_c",write_graph=T)
                                                          )
 
 #Visualizing the Model's Metrics and Architecture
@@ -162,7 +174,7 @@ tensorboard()
 
 #Plotting Metrics
 
-plot(history$metrics$,col="blue",type="l",xlab="Epochs",ylab="Accuracy",main="Epochs vs Accuracy")
+plot(history$metrics$acc,col="blue",type="l",xlab="Epochs",ylab="Accuracy",main="Epochs vs Accuracy")
 lines(history$metrics$val_acc,col="red",type="l")
 
 
@@ -172,6 +184,10 @@ lines(history$metrics$val_loss,col="blue",type="l")
 
 
 #Evaluating the Model on Test Data
+
+score<- model %>% evaluate(earth.test,earth.testLabels,batch_size=10)
+
+score
 
 
 
