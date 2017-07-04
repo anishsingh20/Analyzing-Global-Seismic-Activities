@@ -59,9 +59,16 @@ model<-keras_model_sequential()
 
 #Defining the Architecture of the MLP Model
 
-model %>% layer_dense(units=12, activation="relu",input_shape=c(6)) %>%
+model %>% layer_dense(units=12,activation="relu",input_shape=c(6)) %>%
   layer_dense(units=1) 
 #No activation for output layer because we only want the numeric values
 
+get_config(model)
+get_layer(model,index = 1)
 
+
+#compiling the Model
+model %>% compile(loss="mean_squared_error",optimizer="adam",metrics="accuracy")
+#Loss function is mean squared error bacause of Regression Problem as we want to predict
+#numeric values
 
