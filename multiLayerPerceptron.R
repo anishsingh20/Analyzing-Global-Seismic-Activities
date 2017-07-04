@@ -4,23 +4,32 @@ require(dplyr)
 require(lubridate)
 #Data Preprocessing
 str(earthq)
-earthq$Date<-as.Date(earthq$Date)
+
 
 #Generating new Dataframes with only appropiate Variables
 earth_new<-earthq %>% select(Date,Time,Latitude,Longitude,Type,Depth,Magnitude)
 
+#Converting Type to Numeric data
+earth_new$Type<-as.factor(earth_new$Type)
+#to_categorical converts it to  OHE- one hot encoding
+earth_new$Type <- as.numeric(earth_new$Type)
+
+#converting Date and Time to Numeric Type 
+#factors are just a data type in R which are simply categorical values
+earth_new$Time<-as.factor(earth_new$Time)
+earth_new$Time<-as.numeric(earth_new$Time)
+earth_new$Date<-as.factor(earth_new$Date)
+earth_new$Date<-as.numeric(earth_new$Date)
+
 #Converting data frame to a Matrix
 earth_new<-as.matrix(earth_new)
 
-#Converting Type to Numeric data
-earth_new$Type <- to_categorical(earth_new$Type)
-
-#converting Date and Time to Numeric Type
-earth_new$Date<-as.numeric(ymd_hms(earth_new$Date))
+#Getting the Domentions of the Matrix
+cat("The Dimentions of the matrix is", dim(earth_new))
 
 
 #Normalizing the Data
-earth_new<-normalize(earth_new[,1:6])
+earth_new$Latitude<-normalize(earth_new$Latitude)
 
 
 #Saperating Test and Training Data
