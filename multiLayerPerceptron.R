@@ -81,4 +81,12 @@ history<- model %>% fit(earth.train,earth.trainY,epochs=50,batch_size=10,
                         histogram_freq=1))
 
 
+#Fine tuning the MLP Model for producing better Results and accuracy
+
+
+#second run with different Parameters
+history1<- model %>% fit(earth.train,earth.trainY,epochs=200,batch_size=50,
+                         validation_split=0.2,verbose=1,
+                         callbacks= callback_tensorboard(log_dir = "logs/run_a",write_graph=T,
+                                                         histogram_freq=1))
 
