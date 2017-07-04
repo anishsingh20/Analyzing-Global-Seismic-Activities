@@ -52,4 +52,16 @@ earth.test<-earth_new[rand==2,1:6]
 earth.testY<-earth_new[rand==2,7]
 
 
+#Model Defination
+
+model<-keras_model_sequential()
+
+
+#Defining the Architecture of the MLP Model
+
+model %>% layer_dense(units=12, activation="relu",input_shape=c(6)) %>%
+  layer_dense(units=1) 
+#No activation for output layer because we only want the numeric values
+
+
 
