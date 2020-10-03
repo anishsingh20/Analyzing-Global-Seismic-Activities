@@ -1,4 +1,4 @@
-#Seismic Data Analysis
+#Saeismic Data Analysis
 
 
 #loading the required Packages
